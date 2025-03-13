@@ -22,7 +22,7 @@ namespace DungeonExplorer
             return $"{description}\n{itemText}\n{monsterText}";
         }
 
-        public bool HasMonster()
+        public bool HasMonsters()
         {
             return monsters.Count > 0;
         }
@@ -35,6 +35,11 @@ namespace DungeonExplorer
         public void AddMonster(Monster monster)
         {
             monsters.Add(monster);
+        }
+
+        public bool HasItems()
+        {
+            return items.Count > 0;
         }
 
         public List<string> TakeItems()
