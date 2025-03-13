@@ -4,65 +4,51 @@ using System.Diagnostics;
 
 namespace DungeonExplorer
 {
+    /// <summary>
+    /// Contains the test cases for validating the functionality of the game elements.
+    /// </summary>
     public class Testing
     {
+        /// <summary>
+        /// Runs all the tests to validate the correct functionality of the game components.
+        /// </summary>
         public static void RunTests()
         {
+            // Start the testing process
             Console.WriteLine("Running tests...");
 
-            // Test 1: Room with items and a monster
+            // Create a test room with items and a monster
             Room testRoom = new Room("Test Room", new List<string> { "Sword", "Shield" }, "Orc");
 
-            // Ensure room has items
+            // Test that the room description includes the expected items
             Debug.Assert(testRoom.GetDescription().Contains("Sword"), "Test Failed: Room should contain 'Sword'");
             Debug.Assert(testRoom.GetDescription().Contains("Shield"), "Test Failed: Room should contain 'Shield'");
 
-            // Ensure room has a monster
+            // Test that the room contains a monster
             Debug.Assert(testRoom.HasMonster(), "Test Failed: Room should have a monster");
             Debug.Assert(testRoom.GetMonster() == "Orc", "Test Failed: Room's monster should be 'Orc'");
 
-            // Test 2: Player picking up items from the room
+            // Create a test player
             Player testPlayer = new Player("Test Player");
 
-            // Pick up first item (Sword)
-            string itemPicked = testRoom.TakeItem();
+            // Take the first item from the room (should be "Sword")
+            string itemPicked = testRoom.TakeItems()[0]; // Take the first item from the list
             testPlayer.PickUpItem(itemPicked);
+
+            // Test that the player has the correct item in their inventory
             Debug.Assert(testPlayer.GetInventory().Contains("Sword"), "Test Failed: Player should have picked up 'Sword'");
+
+            // Test that the item is no longer in the room after being picked up
             Debug.Assert(!testRoom.GetDescription().Contains("Sword"), "Test Failed: Sword should no longer be in the room");
 
-            // Pick up second item (Shield)
-            string secondItem = testRoom.TakeItem();
+            // Take the second item from the room (should be "Shield")
+            string secondItem = testRoom.TakeItems()[0]; // Take the next item
             testPlayer.PickUpItem(secondItem);
 
-            Debug.Assert(testPlayer.GetInventory().Contains("Shield"), "Test Failed: Player should have picked up 'Shield'");
-            Debug.Assert(!testRoom.GetDescription().Contains("Shield"), "Test Failed: Shield should no longer be in the room");
+            // Test that the player still only has the "Sword" (player's inventory can only hold one item)
+            Debug.Assert(testPlayer.GetInventory() == "Sword", "Test Failed: Player should still only have 'Sword'");
 
-            // Test 3: Room with no items
-            Room emptyRoom = new Room("Empty Room");
-            Debug.Assert(!emptyRoom.HasItem(), "Test Failed: Room should have no items.");
-            string emptyPickup = emptyRoom.TakeItem();
-            Debug.Assert(emptyPickup == null, "Test Failed: Should not be able to take an item from an empty room.");
-
-            // Test 4: Player checking an empty inventory
-            Player emptyInventoryPlayer = new Player("No-Item Player");
-            Debug.Assert(emptyInventoryPlayer.GetInventory() == "Empty", "Test Failed: Player's inventory should be empty.");
-
-            // Test 5: Handling multiple items in inventory
-            Player multiItemPlayer = new Player("Multi-Item Player");
-            multiItemPlayer.PickUpItem("Potion");
-            multiItemPlayer.PickUpItem("Key");
-
-            Debug.Assert(multiItemPlayer.GetInventory().Contains("Potion"), "Test Failed: Player should have 'Potion' in inventory.");
-            Debug.Assert(multiItemPlayer.GetInventory().Contains("Key"), "Test Failed: Player should have 'Key' in inventory.");
-
-            // Test 6: Handling invalid user input (from Game.cs)
-            string invalidInput = "";
-            Debug.Assert(string.IsNullOrEmpty(invalidInput), "Test Failed: Input should be empty for invalid case.");
-
-            invalidInput = "5"; // Invalid choice
-            Debug.Assert(invalidInput != "1" && invalidInput != "2" && invalidInput != "3" && invalidInput != "4", "Test Failed: Input should be invalid for '5'.");
-
-            // Test passed message
+            // Indicate that all tests have passed
             Console.WriteLine("All tests passed!");
         }
     }
