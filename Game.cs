@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DungeonExplorer
 {
@@ -11,7 +12,9 @@ namespace DungeonExplorer
         public Game()
         {
             player = new Player("Hero");
-            currentRoom = new Room("A room with stone brick walls, a puddle of water, and a key on the floor.", "Key");
+            currentRoom = new Room("A room with stone brick walls, a puddle of water, and a table at the far end",
+                new List<string> { "Key", "Potion" },
+                "Goblin");
             playing = true;
         }
 
