@@ -27,6 +27,11 @@ namespace DungeonExplorer
             return monsters.Count > 0;
         }
 
+        public bool HasItems()
+        {
+            return items.Count > 0;
+        }
+
         public List<Monster> GetMonsters()
         {
             return monsters;
