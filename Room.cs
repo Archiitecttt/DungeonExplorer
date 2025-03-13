@@ -22,7 +22,7 @@ namespace DungeonExplorer
             return $"{description}\n{itemText}\n{monsterText}";
         }
 
-        public bool HasMonster()
+        public bool HasMonsters()
         {
             return monsters.Count > 0;
         }
