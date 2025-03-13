@@ -42,6 +42,11 @@ namespace DungeonExplorer
             monsters.Add(monster);
         }
 
+        public bool HasItems()
+        {
+            return items.Count > 0;
+        }
+
         public List<string> TakeItems()
         {
             List<string> takenItems = new List<string>();
