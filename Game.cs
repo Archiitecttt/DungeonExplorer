@@ -57,15 +57,17 @@ namespace DungeonExplorer
         /// <summary>
         /// Displays the menu of options for the player to choose from.
         /// </summary>
-        private void DisplayMenu()
-        {
-            Console.WriteLine("\nWhat would you like to do?");
-            Console.WriteLine("1. View Room Description");
-            Console.WriteLine("2. Pick up an item");
-            Console.WriteLine("3. Check Inventory");
-            Console.WriteLine("4. Exit Game");
-            Console.Write("Enter your choice: ");
-        }
+            private void DisplayMenu()
+            {
+                Console.WriteLine(@"
+What would you like to do?
+1. View Room Description
+2. Pick up an item
+3. Check Inventory
+4. Exit Game
+Enter your choice: ");
+                }
+            }
 
         /// <summary>
         /// Handles the user input by executing the corresponding game action.
