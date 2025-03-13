@@ -28,7 +28,7 @@ namespace DungeonExplorer
                 DisplayMenu();
                 string input = Console.ReadLine()?.Trim();
 
-                if (string.IsNullOrEmpty(input))
+                if (string.IsNullOrEmpty(input)) // Handles empty inputs
                 {
                     Console.WriteLine("Please enter a valid command.");
                     continue;
@@ -48,41 +48,53 @@ namespace DungeonExplorer
             Console.Write("Enter your choice: ");
         }
 
+        /// <summary>
+        /// Handles user input for game actions.
+        /// </summary>
         private void HandleUserInput(string input)
         {
             switch (input)
             {
                 case "1":
-                    Console.WriteLine($"Room: {currentRoom.GetDescription()}");
+                    Console.WriteLine($"Room: {currentRoom.GetDescription()}"); // Shows the room's description
                     break;
                 case "2":
-                    AttemptToPickUpItem();
+                    AttemptToPickUpItem(); // Try to pick something up
                     break;
                 case "3":
-                    Console.WriteLine($"Inventory: {player.GetInventory()}");
+                    Console.WriteLine($"Inventory: {player.GetInventory()}"); // Shows what items the player has
                     break;
                 case "4":
                     Console.WriteLine("Exiting game...");
                     playing = false;
                     break;
                 default:
-                    Console.WriteLine("Invalid choice. Try again.");
+                    Console.WriteLine("Invalid choice. Try again."); // Handles invalid input
                     break;
             }
         }
+
 
         private void AttemptToPickUpItem()
         {
             if (currentRoom.HasItem())
             {
                 string itemName = currentRoom.TakeItem();
-                player.PickUpItem(itemName);
-                Console.WriteLine($"You picked up the {itemName}!");
+                if (!string.IsNullOrEmpty(itemName))
+                {
+                    player.PickUpItem(itemName);
+                    Console.WriteLine($"You picked up the {itemName}!");
+                }
+                else
+                {
+                    Console.WriteLine("Error: Item could not be picked up.");
+                }
             }
             else
             {
                 Console.WriteLine("There's no item to pick up.");
             }
         }
+
     }
 }
