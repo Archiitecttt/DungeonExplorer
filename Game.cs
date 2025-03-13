@@ -17,15 +17,20 @@ namespace DungeonExplorer
         /// </summary>
         public Game()
         {
-            // Initialize player with a name "Hero"
             player = new Player("Hero");
 
-            // Create a room with description, items, and a monster
+            // Create some monsters for the room
+            List<Monster> monsters = new List<Monster>
+            {
+                new Monster("Goblin"),
+                new Monster("Troll")
+            };
+
+            // Create a room with description, items, and monsters
             currentRoom = new Room("A room with stone brick walls, a puddle of water, and a table at the far end",
                 new List<string> { "Key", "Potion" },
-                "Goblin");
+                monsters);
 
-            // Set the game to be in the playing state
             playing = true;
         }
 
@@ -37,13 +42,11 @@ namespace DungeonExplorer
             Console.WriteLine("Welcome to Dungeon Explorer!");
             Console.WriteLine($"You are {player.GetName()}.");
 
-            // Loop continues until the game ends
             while (playing)
             {
                 DisplayMenu();
                 string input = Console.ReadLine()?.Trim();
 
-                // Handle invalid or empty input
                 if (string.IsNullOrEmpty(input))
                 {
                     Console.WriteLine("Please enter a valid command.");
@@ -76,24 +79,19 @@ Enter your choice: ");
             switch (input)
             {
                 case "1":
-                    // Display room description
                     Console.WriteLine($"Room: {currentRoom.GetDescription()}");
                     break;
                 case "2":
-                    // Attempt to pick up an item from the room
                     AttemptToPickUpItem();
                     break;
                 case "3":
-                    // Display the player's inventory
                     Console.WriteLine($"Inventory: {player.GetInventory()}");
                     break;
                 case "4":
-                    // Exit the game
                     Console.WriteLine("Exiting game...");
                     playing = false;
                     break;
                 default:
-                    // Invalid input case
                     Console.WriteLine("Invalid choice. Try again.");
                     break;
             }
@@ -104,13 +102,10 @@ Enter your choice: ");
         /// </summary>
         private void AttemptToPickUpItem()
         {
-            // Check if the room has any items
             if (currentRoom.HasItem())
             {
-                // Take all the items from the room
                 List<string> items = currentRoom.TakeItems();
 
-                // Loop through all items and add them to the player's inventory
                 foreach (string item in items)
                 {
                     player.PickUpItem(item);
@@ -119,8 +114,12 @@ Enter your choice: ");
             }
             else
             {
-                // If there are no items in the room
                 Console.WriteLine("There's no item to pick up.");
+            }
+
+            if (currentRoom.HasMonsters())
+            {
+                Console.WriteLine("Monsters are watching you closely!");
             }
         }
     }

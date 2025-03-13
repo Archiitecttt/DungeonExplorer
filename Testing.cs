@@ -17,16 +17,20 @@ namespace DungeonExplorer
             // Start the testing process
             Console.WriteLine("Running tests...");
 
-            // Create a test room with items and a monster
-            Room testRoom = new Room("Test Room", new List<string> { "Sword", "Shield" }, "Orc");
+            // Create a test room with items and multiple monsters
+            Monster orc = new Monster("Orc");
+            Monster goblin = new Monster("Goblin");
+            Room testRoom = new Room("Test Room", new List<string> { "Sword", "Shield" }, new List<Monster> { orc, goblin });
 
             // Test that the room description includes the expected items
             Debug.Assert(testRoom.GetDescription().Contains("Sword"), "Test Failed: Room should contain 'Sword'");
             Debug.Assert(testRoom.GetDescription().Contains("Shield"), "Test Failed: Room should contain 'Shield'");
 
-            // Test that the room contains a monster
-            Debug.Assert(testRoom.HasMonster(), "Test Failed: Room should have a monster");
-            Debug.Assert(testRoom.GetMonster() == "Orc", "Test Failed: Room's monster should be 'Orc'");
+            // Test that the room contains monsters
+            Debug.Assert(testRoom.HasMonster(), "Test Failed: Room should have monsters");
+            Debug.Assert(testRoom.GetMonsters().Count == 2, "Test Failed: Room should have two monsters");
+            Debug.Assert(testRoom.GetMonsters()[0].Name == "Orc", "Test Failed: First monster should be 'Orc'");
+            Debug.Assert(testRoom.GetMonsters()[1].Name == "Goblin", "Test Failed: Second monster should be 'Goblin'");
 
             // Create a test player
             Player testPlayer = new Player("Test Player");
@@ -47,6 +51,9 @@ namespace DungeonExplorer
 
             // Test that the player still only has the "Sword" (player's inventory can only hold one item)
             Debug.Assert(testPlayer.GetInventory() == "Sword", "Test Failed: Player should still only have 'Sword'");
+
+            // Test that the room no longer contains the "Shield"
+            Debug.Assert(!testRoom.GetDescription().Contains("Shield"), "Test Failed: Shield should no longer be in the room");
 
             // Indicate that all tests have passed
             Console.WriteLine("All tests passed!");
