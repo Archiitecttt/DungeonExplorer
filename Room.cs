@@ -12,7 +12,7 @@ namespace DungeonExplorer
         public Room(string description, List<string> items = null, string monster = null)
         {
             this.description = description;
-            this.items = items ?? new List<string>();
+            this.items = items ?? new List<string>();  // Default to empty list if null
             this.monster = monster;
         }
 
@@ -33,7 +33,7 @@ namespace DungeonExplorer
             if (items.Count > 0)
             {
                 string takenItem = items[0];
-                items.RemoveAt(0);
+                items.RemoveAt(0);  // Remove the item from the room
                 return takenItem;
             }
             return null;

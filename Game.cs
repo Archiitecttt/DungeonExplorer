@@ -13,7 +13,7 @@ namespace DungeonExplorer
         {
             player = new Player("Hero");
             currentRoom = new Room("A room with stone brick walls, a puddle of water, and a table at the far end",
-                new List<string> { "Key", "Potion" },
+                new List<string> { "Key", "Potion" }, // Room has multiple items now
                 "Goblin");
             playing = true;
         }
@@ -74,16 +74,18 @@ namespace DungeonExplorer
             }
         }
 
-
         private void AttemptToPickUpItem()
         {
             if (currentRoom.HasItem())
             {
-                string itemName = currentRoom.TakeItem();
-                if (!string.IsNullOrEmpty(itemName))
+                List<string> items = currentRoom.TakeItems();  // Take all items in the room
+                if (items.Count > 0)
                 {
-                    player.PickUpItem(itemName);
-                    Console.WriteLine($"You picked up the {itemName}!");
+                    foreach (string item in items)
+                    {
+                        player.PickUpItem(item);
+                        Console.WriteLine($"You picked up the {item}!");
+                    }
                 }
                 else
                 {
@@ -95,6 +97,5 @@ namespace DungeonExplorer
                 Console.WriteLine("There's no item to pick up.");
             }
         }
-
     }
 }
