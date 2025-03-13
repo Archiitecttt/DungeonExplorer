@@ -1,31 +1,52 @@
-﻿namespace DungeonExplorer
+﻿using System;
+using System.Collections.Generic;
+
+namespace DungeonExplorer
 {
     public class Room
     {
         private string description;
-        private string item;
+        private List<string> items;
+        private string monster;
 
-        public Room(string description, string item = null)
+        public Room(string description, List<string> items = null, string monster = null)
         {
             this.description = description;
-            this.item = item;
+            this.items = items ?? new List<string>();
+            this.monster = monster;
         }
 
         public string GetDescription()
         {
-            return description;
+            string itemText = items.Count > 0 ? $"Items in the room: {string.Join(", ", items)}" : "No items here.";
+            string monsterText = monster != null ? $"A {monster} is here!" : "No monsters are here.";
+            return $"{description}\n{itemText}\n{monsterText}";
         }
 
         public bool HasItem()
         {
-            return item != null;
+            return items.Count > 0;
         }
 
         public string TakeItem()
         {
-            string temp = item;
-            item = null;
-            return temp;
+            if (items.Count > 0)
+            {
+                string takenItem = items[0];
+                items.RemoveAt(0);
+                return takenItem;
+            }
+            return null;
+        }
+
+        public bool HasMonster()
+        {
+            return monster != null;
+        }
+
+        public string GetMonster()
+        {
+            return monster;
         }
     }
 }
