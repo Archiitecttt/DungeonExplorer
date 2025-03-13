@@ -29,7 +29,13 @@ namespace DungeonExplorer
                 Console.WriteLine("4. Exit Game");
                 Console.Write("Enter your choice: ");
 
-                string input = Console.ReadLine();
+                string input = Console.ReadLine()?.Trim();
+
+                if (string.IsNullOrEmpty(input))
+                {
+                    Console.WriteLine("Please enter a valid command.");
+                    continue;
+                }
 
                 switch (input)
                 {
