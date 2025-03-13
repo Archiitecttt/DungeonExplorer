@@ -102,7 +102,7 @@ Enter your choice: ");
         /// </summary>
         private void AttemptToPickUpItem()
         {
-            if (currentRoom.HasItem())
+            if (currentRoom.HasItems())
             {
                 List<string> items = currentRoom.TakeItems();
 
